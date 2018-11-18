@@ -3,8 +3,11 @@ package com.mohancm.newsapp;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
@@ -24,7 +27,7 @@ import java.util.ArrayList;
  */
 public class TopNewsFragment extends Fragment implements LoaderManager.LoaderCallbacks<String> {
 
-
+    private final String REQUEST_URL = "https://content.guardianapis.com/search?api-key=0d451edd-27e7-4256-b573-367caef40d57&show-fields=headline,thumbnail&show-tags=contributor";
     private RecyclerView topNews;
     private ProgressDialog progress;
     private TextView errorTextView;
@@ -53,8 +56,17 @@ public class TopNewsFragment extends Fragment implements LoaderManager.LoaderCal
             progress.setCancelable(false);
             progress.setIcon(R.drawable.ic_download);
             progress.show();
+
+            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+            String maxNoOfNewsPerPage = sharedPreferences.getString(getString(R.string.settings_max_news_key), getString(R.string.settings_max_news_default));
+            String sortBy = sharedPreferences.getString(getString(R.string.settings_order_by_key), getString(R.string.settings_order_by_default));
+
+            Uri.Builder uriBuilder = Uri.parse(REQUEST_URL).buildUpon();
+            uriBuilder.appendQueryParameter("sort-by", sortBy);
+            uriBuilder.appendQueryParameter("page-size", maxNoOfNewsPerPage);
+
             Bundle bundle = new Bundle();
-            bundle.putString("URL", "https://content.guardianapis.com/search?api-key=0d451edd-27e7-4256-b573-367caef40d57&show-fields=headline,thumbnail&show-tags=contributor&page-size=40");
+            bundle.putString("URL", uriBuilder.toString());
             getLoaderManager().initLoader(1, bundle, this);
 
         } else {

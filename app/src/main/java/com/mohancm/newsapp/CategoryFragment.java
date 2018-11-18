@@ -1,7 +1,10 @@
 package com.mohancm.newsapp;
 
 
+import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -42,14 +45,14 @@ public class CategoryFragment extends Fragment {
         };
 
         final String[] categoryAPIUrl = {
-                "https://content.guardianapis.com/search?section=world&api-key=0d451edd-27e7-4256-b573-367caef40d57&show-fields=headline,thumbnail&show-tags=contributor&page-size=30",
-                "https://content.guardianapis.com/search?section=science&api-key=0d451edd-27e7-4256-b573-367caef40d57&show-fields=headline,thumbnail&show-tags=contributor&page-size=30",
-                "https://content.guardianapis.com/search?section=technology&api-key=0d451edd-27e7-4256-b573-367caef40d57&show-fields=headline,thumbnail&show-tags=contributor&page-size=30",
-                "https://content.guardianapis.com/search?section=sport&api-key=0d451edd-27e7-4256-b573-367caef40d57&show-fields=headline,thumbnail&show-tags=contributor&page-size=30",
-                "https://content.guardianapis.com/search?section=games&api-key=0d451edd-27e7-4256-b573-367caef40d57&show-fields=headline,thumbnail&show-tags=contributor&page-size=30",
-                "https://content.guardianapis.com/search?section=music&api-key=0d451edd-27e7-4256-b573-367caef40d57&show-fields=headline,thumbnail&show-tags=contributor&page-size=30",
-                "https://content.guardianapis.com/search?section=film&api-key=0d451edd-27e7-4256-b573-367caef40d57&show-fields=headline,thumbnail&show-tags=contributor&page-size=30",
-                "https://content.guardianapis.com/search?section=politics&api-key=0d451edd-27e7-4256-b573-367caef40d57&show-fields=headline,thumbnail&show-tags=contributor&page-size=30"
+                "https://content.guardianapis.com/search?section=world&api-key=0d451edd-27e7-4256-b573-367caef40d57&show-fields=headline,thumbnail&show-tags=contributor",
+                "https://content.guardianapis.com/search?section=science&api-key=0d451edd-27e7-4256-b573-367caef40d57&show-fields=headline,thumbnail&show-tags=contributor",
+                "https://content.guardianapis.com/search?section=technology&api-key=0d451edd-27e7-4256-b573-367caef40d57&show-fields=headline,thumbnail&show-tags=contributor",
+                "https://content.guardianapis.com/search?section=sport&api-key=0d451edd-27e7-4256-b573-367caef40d57&show-fields=headline,thumbnail&show-tags=contributor",
+                "https://content.guardianapis.com/search?section=games&api-key=0d451edd-27e7-4256-b573-367caef40d57&show-fields=headline,thumbnail&show-tags=contributor",
+                "https://content.guardianapis.com/search?section=music&api-key=0d451edd-27e7-4256-b573-367caef40d57&show-fields=headline,thumbnail&show-tags=contributor",
+                "https://content.guardianapis.com/search?section=film&api-key=0d451edd-27e7-4256-b573-367caef40d57&show-fields=headline,thumbnail&show-tags=contributor",
+                "https://content.guardianapis.com/search?section=politics&api-key=0d451edd-27e7-4256-b573-367caef40d57&show-fields=headline,thumbnail&show-tags=contributor"
         };
 
 
@@ -58,8 +61,17 @@ public class CategoryFragment extends Fragment {
         TabLayout tabLayout = (TabLayout) view.findViewById(R.id.tabs);
         for (int i = 0; i < categoryNames.length; i++) {
             CategoryTabFragment categoryTabFragment = new CategoryTabFragment();
+
+            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+            String maxNoOfNewsPerPage = sharedPreferences.getString(getString(R.string.settings_max_news_key), getString(R.string.settings_max_news_default));
+            String sortBy = sharedPreferences.getString(getString(R.string.settings_order_by_key), getString(R.string.settings_order_by_default));
+
+            Uri.Builder uriBuilder = Uri.parse(categoryAPIUrl[i]).buildUpon();
+            uriBuilder.appendQueryParameter("sort-by", sortBy);
+            uriBuilder.appendQueryParameter("page-size", maxNoOfNewsPerPage);
+
             Bundle bundle = new Bundle();
-            bundle.putString("URL", categoryAPIUrl[i]);
+            bundle.putString("URL", uriBuilder.toString());
             categoryTabFragment.setArguments(bundle);
             customPagerAdapter.add(categoryTabFragment, categoryNames[i]);
         }

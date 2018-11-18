@@ -28,4 +28,17 @@
     <string name="one">1</string>
     <string name="two">2</string>
     <string name="get_updated">Get Updated !</string>
+
+    <string name="settings_max_news_default" translatable="false">30</string>
+    <string name="settings_max_news_label">Maximum News per Page</string>
+    <string name="settings_max_news_key" translatable="false">max_news</string>
+    <string name="settings_order_by_label">Order News By</string>
+    <string name="settings_order_by_key" translatable="false">order_by</string>
+    <string name="settings_order_by_default" translatable="false">@string/settings_order_by_newest_value</string>
+    <string name="settings_order_by_newest_label">Latest</string>
+    <string name="settings_order_by_newest_value" translatable="false">newest</string>
+    <string name="settings_order_by_oldest_label">Oldest</string>
+    <string name="settings_order_by_oldest_value" translatable="false">oldest</string>
+    <string name="settings_order_by_relevance_label">Relevance</string>
+    <string name="settings_order_by_relevance_value" translatable="false">relevance</string>
 </resources>

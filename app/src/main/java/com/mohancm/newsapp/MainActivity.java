@@ -1,5 +1,6 @@
 package com.mohancm.newsapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -30,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
                     fragment = headlineFragment;
                     return true;
                 case R.id.navigation_settings:
+                    Intent settingsIntent = new Intent(MainActivity.this, SettingsActivity.class);
+                    startActivity(settingsIntent);
                     return true;
             }
             return false;
