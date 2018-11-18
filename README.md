@@ -1,4 +1,4 @@
-# NewsApp Stage 1 - Project 6 By Udacity && Google.
+# NewsApp Stage 2 - Project 7 By Udacity && Google.
 
 ## Usage:
 
@@ -14,7 +14,7 @@
 * Doing network operations independent of the Activity lifecycle
 * usage of PreferenceFragment
 
-## About NewsApp1
+## About NewsApp2
 This app is uses <a href="https://open-platform.theguardian.com/documentation/" target="_blank"> Guardians API</a>  to fetch latest news of various categories.
 
 ## Screenshots
