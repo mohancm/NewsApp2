@@ -6,5 +6,6 @@
     <color name="colorAccentDark">#ff2581df</color>
     <color name="colorBlack">#000</color>
     <color name="colorBackground">#edf1f7</color>
+    <color name="colorSplashText">#2196F3</color>
 
 </resources>

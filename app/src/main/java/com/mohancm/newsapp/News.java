@@ -53,7 +53,9 @@ public class News {
             this.newsThumbline = json.getJSONObject("fields").getString("thumbnail");
         this.newsWebUrl = json.getString("webUrl");
         this.newsCategory = json.getString("sectionName");
-        this.newsAuthor = json.getJSONArray("tags").getJSONObject(0).getString("webTitle");
+        final JSONArray authorTag = json.getJSONArray("tags");
+        if (authorTag.length() > 0)
+            this.newsAuthor = authorTag.getJSONObject(0).getString("webTitle");
         return this;
     }
 

@@ -16,7 +16,7 @@ import java.nio.charset.Charset;
 
 public class JsonLoader extends AsyncTaskLoader<String> {
 
-    private String url;
+    private final String url;
 
     public JsonLoader(@NonNull Context context, String url) {
         super(context);
@@ -46,7 +46,9 @@ public class JsonLoader extends AsyncTaskLoader<String> {
             httpURLConnection.setConnectTimeout(10000);
             httpURLConnection.setReadTimeout(10000);
             httpURLConnection.connect();
-            inputStream = httpURLConnection.getInputStream();
+            if(httpURLConnection.getResponseCode() == HttpURLConnection.HTTP_OK){
+                inputStream = httpURLConnection.getInputStream();
+            }
 
             StringBuilder outputJson = new StringBuilder();
             if (inputStream != null) {
