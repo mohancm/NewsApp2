@@ -19,6 +19,14 @@ public class SettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
+        setupActionBar();
+
+    }
+
+    private void setupActionBar(){
+        getSupportActionBar().setIcon(getDrawable(R.drawable.ic_arrow_back));
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
 
